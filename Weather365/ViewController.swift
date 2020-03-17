@@ -26,8 +26,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     let locationManager = CLLocationManager()
     
-    let apiKey = "jNzlgbMAW26nbAjlUB2ZcLxdl3gLFn9K"
-    
+    //let apiKey = "jNzlgbMAW26nbAjlUB2ZcLxdl3gLFn9K"
+    let apiKey = ""
     let locationURL = "https://dataservice.accuweather.com/locations/v1/cities/geoposition/search"
     
     let currentWeatherURL = "https://dataservice.accuweather.com/currentconditions/v1/"
