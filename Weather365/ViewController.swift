@@ -26,12 +26,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     let locationManager = CLLocationManager()
     
-    let apiKey = "AddYourAPIKey"
-    
-    let locationURL = "https://dataservice.accuweather.com/locations/v1/cities/geoposition/search"
-    
-    let currentWeatherURL = "https://dataservice.accuweather.com/currentconditions/v1/"
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         locationManager.delegate = self
@@ -41,12 +36,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     func getlocationURL(_ latLng: String) -> String{
         
-        return "\(locationURL)?q=\(latLng)&apikey=\(apiKey)"
+        return "\(Constants.locationURL)?q=\(latLng)&apikey=\(Constants.apiKey)"
     }
     
     func getCurrentWeatherURL(_ locationKey: String) -> String{
         
-        return "\(currentWeatherURL)\(locationKey)?apikey=\(apiKey)"
+        return "\(Constants.currentWeatherURL)\(locationKey)?apikey=\(Constants.apiKey)"
     }
     
     
@@ -68,7 +63,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                 .done { (temp, condition) in
                     
                     self.lblCurrentCondition.text = condition
-                    self.lblTemperature.text = "\(temp) F"
+                    self.lblTemperature.text = "\(temp)℉"
                     
                 }.catch { (error) in
                     print(error)
@@ -114,23 +109,23 @@ extension ViewController {
         
         return Promise<(String, String)> { seal -> Void  in
             
-            Alamofire.request(URL).responseJSON { response in
-                if response.error != nil {
-                    seal.reject(response.error!)
-                }
-                
-                let currentJSON : JSON = JSON(response.result.value!)
-                
-                if  currentJSON[0]["WeatherText"].exists() &&
-                    currentJSON[0]["Temperature"]["Imperial"]["Value"].exists() {
+                Alamofire.request(URL).responseJSON { response in
+                    if response.error != nil {
+                        seal.reject(response.error!)
+                    }
                     
-                    let condition = currentJSON[0]["WeatherText"].stringValue
-                    let temp = currentJSON[0]["Temperature"]["Imperial"]["Value"].stringValue
+                    let currentJSON : JSON = JSON(response.result.value!)
                     
-                    seal.fulfill((temp, condition))
-                }
-        }// end of promise
-    }// end of function
+                    if  currentJSON[0]["WeatherText"].exists() &&
+                        currentJSON[0]["Temperature"]["Imperial"]["Value"].exists() {
+                        
+                        let condition = currentJSON[0]["WeatherText"].stringValue
+                        let temp = currentJSON[0]["Temperature"]["Imperial"]["Value"].stringValue
+                        
+                        seal.fulfill((temp, condition))
+                    }
+            }// end of promise
+        }// end of function
     
-}
+    }
 }

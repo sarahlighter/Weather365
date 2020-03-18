@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -14,6 +14,9 @@
 		756D4A2E24182BB1002AC950 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 756D4A2C24182BB1002AC950 /* Main.storyboard */; };
 		756D4A3024182BB2002AC950 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 756D4A2F24182BB2002AC950 /* Assets.xcassets */; };
 		756D4A3324182BB2002AC950 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 756D4A3124182BB2002AC950 /* LaunchScreen.storyboard */; };
+		75F38EFE2421B66900FD5F81 /* AddCityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F38EFD2421B66900FD5F81 /* AddCityViewController.swift */; };
+		75F38F002421BA6A00FD5F81 /* LocationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F38EFF2421BA6A00FD5F81 /* LocationModel.swift */; };
+		75F38F022421BCA200FD5F81 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F38F012421BCA200FD5F81 /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +29,9 @@
 		756D4A2F24182BB2002AC950 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		756D4A3224182BB2002AC950 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		756D4A3424182BB2002AC950 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		75F38EFD2421B66900FD5F81 /* AddCityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCityViewController.swift; sourceTree = "<group>"; };
+		75F38EFF2421BA6A00FD5F81 /* LocationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationModel.swift; sourceTree = "<group>"; };
+		75F38F012421BCA200FD5F81 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		A852648AD779F40F1B22EA23 /* Pods-Weather365.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Weather365.debug.xcconfig"; path = "Target Support Files/Pods-Weather365/Pods-Weather365.debug.xcconfig"; sourceTree = "<group>"; };
 		CBBAFE5E3745E2BEC9642386 /* Pods-Weather365.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Weather365.release.xcconfig"; path = "Target Support Files/Pods-Weather365/Pods-Weather365.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -78,6 +84,9 @@
 				756D4A2F24182BB2002AC950 /* Assets.xcassets */,
 				756D4A3124182BB2002AC950 /* LaunchScreen.storyboard */,
 				756D4A3424182BB2002AC950 /* Info.plist */,
+				75F38EFD2421B66900FD5F81 /* AddCityViewController.swift */,
+				75F38EFF2421BA6A00FD5F81 /* LocationModel.swift */,
+				75F38F012421BCA200FD5F81 /* Constants.swift */,
 			);
 			path = Weather365;
 			sourceTree = "<group>";
@@ -88,7 +97,6 @@
 				A852648AD779F40F1B22EA23 /* Pods-Weather365.debug.xcconfig */,
 				CBBAFE5E3745E2BEC9642386 /* Pods-Weather365.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -210,6 +218,9 @@
 				756D4A2B24182BB1002AC950 /* ViewController.swift in Sources */,
 				756D4A2724182BB1002AC950 /* AppDelegate.swift in Sources */,
 				756D4A2924182BB1002AC950 /* SceneDelegate.swift in Sources */,
+				75F38F002421BA6A00FD5F81 /* LocationModel.swift in Sources */,
+				75F38EFE2421B66900FD5F81 /* AddCityViewController.swift in Sources */,
+				75F38F022421BCA200FD5F81 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

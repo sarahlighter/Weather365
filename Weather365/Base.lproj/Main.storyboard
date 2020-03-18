@@ -60,22 +60,50 @@
         <!--Add City-->
         <scene sceneID="lAa-3p-Clx">
             <objects>
-                <viewController id="UOT-VI-xxX" sceneMemberID="viewController">
+                <viewController id="UOT-VI-xxX" customClass="AddCityViewController" customModule="Weather365" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="2lU-1W-J6u">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Type city Name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0h9-rz-kiy">
-                                <rect key="frame" x="57" y="136" width="286" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="due-O3-JPz">
+                                <rect key="frame" x="0.0" y="88" width="414" height="75"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="75" id="Ya2-ud-4py"/>
+                                </constraints>
                                 <textInputTraits key="textInputTraits"/>
-                            </textField>
+                            </searchBar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="BnF-M2-xAg">
+                                <rect key="frame" x="0.0" y="163" width="414" height="699"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="hzf-zg-asP">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="hzf-zg-asP" id="Z43-ML-hH7">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="due-O3-JPz" firstAttribute="top" secondItem="RK4-lW-gHx" secondAttribute="top" id="1gi-QN-Wxi"/>
+                            <constraint firstItem="due-O3-JPz" firstAttribute="trailing" secondItem="RK4-lW-gHx" secondAttribute="trailing" id="6Vq-1b-mcv"/>
+                            <constraint firstItem="due-O3-JPz" firstAttribute="leading" secondItem="RK4-lW-gHx" secondAttribute="leading" id="7Rp-8A-WbZ"/>
+                            <constraint firstItem="RK4-lW-gHx" firstAttribute="trailing" secondItem="BnF-M2-xAg" secondAttribute="trailing" id="eOa-3E-RiL"/>
+                            <constraint firstItem="RK4-lW-gHx" firstAttribute="bottom" secondItem="BnF-M2-xAg" secondAttribute="bottom" id="fhF-Bu-Z28"/>
+                            <constraint firstItem="BnF-M2-xAg" firstAttribute="top" secondItem="due-O3-JPz" secondAttribute="bottom" symbolic="YES" id="jr0-yD-CJz"/>
+                            <constraint firstItem="BnF-M2-xAg" firstAttribute="leading" secondItem="RK4-lW-gHx" secondAttribute="leading" id="skr-rc-qRa"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="RK4-lW-gHx"/>
                     </view>
                     <navigationItem key="navigationItem" title="Add City" id="jOn-IL-7IQ"/>
+                    <connections>
+                        <outlet property="searchBar" destination="due-O3-JPz" id="WFe-CP-YNC"/>
+                        <outlet property="tblView" destination="BnF-M2-xAg" id="SWb-8g-3wt"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zbt-qH-v2o" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
