@@ -12,6 +12,7 @@ import Alamofire
 import SwiftSpinner
 import SwiftyJSON
 import PromiseKit
+import RealmSwift
 
 
 class ViewController: UIViewController, CLLocationManagerDelegate {
@@ -24,6 +25,16 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     @IBOutlet weak var lblTemperature: UILabel!
     
+    @IBOutlet weak var tblView: UITableView!
+    
+    
+    @IBOutlet weak var pickerView: UIPickerView!
+    
+    
+    var arr = [LocationModel]()
+    
+    
+    
     let locationManager = CLLocationManager()
     
 
@@ -32,7 +43,50 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
         locationManager.requestLocation()
+        
+        tblView.delegate = self
+        tblView.dataSource = self
+        pickerView.delegate = self
+        pickerView.dataSource = self
+        
+        
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        loadCities();
+    }
+    
+    
+    func loadCities(){
+        
+        arr.removeAll()
+        let dummyLoc = LocationModel()
+        dummyLoc.locationKey = "-1"
+        dummyLoc.cityName    = "Seattle"
+        dummyLoc.countryName = "US"
+        dummyLoc.stateName = "WA"
+        arr.append(dummyLoc)
+        
+        do{
+            let realm = try! Realm()
+            let locations = realm.objects(LocationModel.self)
+            
+            for location in locations {
+                arr.append(location)
+            }
+            tblView.reloadData()
+            pickerView.reloadAllComponents()
+            
+            
+        }catch{
+            print("Error in reading from DB")
+            
+        }
+        
+        
+    }
+    
+    
     
     func getlocationURL(_ latLng: String) -> String{
         
@@ -58,16 +112,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             getLocationKey(for: locationURL)
             .done { locKey, city in
                 self.lblCityName.text = city
-                let currentURL = self.getCurrentWeatherURL(locKey)
-                self.getCurrentConditions(for: currentURL)
-                .done { (temp, condition) in
-                    
-                    self.lblCurrentCondition.text = condition
-                    self.lblTemperature.text = "\(temp)℉"
-                    
-                }.catch { (error) in
-                    print(error)
-                }
+                self.updateCurrentTempAndCondition(locKey)
             }
             .catch { error in
                 print(error)
@@ -81,6 +126,78 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
     
 }
+
+extension ViewController: UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource{
+    
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return arr.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        if indexPath.row == 0 {
+            cell.textLabel?.text = "Current Location"
+        }else{
+            cell.textLabel?.text = "\(arr[indexPath.row].cityName), \(arr[indexPath.row].stateName)"
+        }
+        
+        
+        return cell
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return arr.count
+        
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        if row == 0{
+            return "Current Location"
+        }
+        return "\(arr[row].cityName), \(arr[row].stateName)"
+    }
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        
+        if row == 0 {
+            print("current location selected")
+        }
+        else{
+            // set the city name
+            self.lblCityName.text = "\(arr[row].cityName), \(arr[row].stateName)"
+            
+            let locKey = arr[row].locationKey
+            updateCurrentTempAndCondition(locKey)
+        }
+    }
+    
+    
+    func updateCurrentTempAndCondition(_ locKey: String){
+        
+        // get values for current condition and temp
+        let currentURL = self.getCurrentWeatherURL(locKey)
+        self.getCurrentConditions(for: currentURL)
+        .done { (temp, condition) in
+            
+            self.lblCurrentCondition.text = condition
+            self.lblTemperature.text = "\(temp)℉"
+            
+        }.catch { (error) in
+            print(error)
+        }
+        
+    }
+    
+    
+}
+
+
+
+
 
 extension ViewController {
     
@@ -127,5 +244,9 @@ extension ViewController {
             }// end of promise
         }// end of function
     
+    }
+    
+    func getextendedForecast(_ locationKey: String){
+        
     }
 }

@@ -26,12 +26,8 @@ class AddCityViewController: UIViewController  {
         tblView.delegate = self
         tblView.dataSource = self
         searchBar.delegate = self
-        print(Realm.Configuration.defaultConfiguration.fileURL)
+        //print(Realm.Configuration.defaultConfiguration.fileURL)
     }
-    
-    
-    
-    
 }
 
 
@@ -55,6 +51,26 @@ extension AddCityViewController: UITableViewDelegate, UITableViewDataSource {
         addCityToDB(for: indexPath.row)
     }
     
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        
+        if editingStyle == .delete {
+            let loc = arr[indexPath.row]
+            //self.deleteCity(for: loc)
+            self.arr.remove(at: indexPath.row)
+            tblView.deleteRows(at: [indexPath], with: .fade)
+        }
+    }
+    
+    func deleteCity(for location: LocationModel){
+        let realm = try! Realm()
+        try! realm.write{
+            realm.delete(location)
+        }
+    }
+    
+    
+    
     func addCityToDB(for row: Int){
         let city = arr[row].cityName
         let alert = UIAlertController(title: "Add City", message: "Get weather for \(city)", preferredStyle:.alert)
@@ -74,12 +90,14 @@ extension AddCityViewController: UITableViewDelegate, UITableViewDataSource {
     
     func addCity(for index: Int){
         
+        // check if city is already added
         if isCityAlreadyAdded(for: index){
             arr.removeAll()
             tblView.reloadData()
             return
         }
         
+        // add city in DB
         let loc = arr[index]
         do {
             let realm = try Realm()
@@ -89,6 +107,8 @@ extension AddCityViewController: UITableViewDelegate, UITableViewDataSource {
         }catch{
             print("Unable to add city in the database")
         }
+        
+        // clear table and searchbar and reload data
         arr.removeAll()
         searchBar.text = ""
         tblView.reloadData()
@@ -96,17 +116,14 @@ extension AddCityViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func isCityAlreadyAdded(for index: Int) -> Bool{
+        
         let loc = arr[index]
         
         let realm = try! Realm()
-        
         if realm.object(ofType: LocationModel.self, forPrimaryKey: loc.locationKey) != nil {
             return true
         }
         return false
-        
-        
-        
     }
     
 }
@@ -116,15 +133,17 @@ extension AddCityViewController: UISearchBarDelegate{
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
+        // if search text is less than 3 dont do anything
         guard searchBar.text!.count > 3 else {
+            // if empty delete everything
             if searchBar.text!.isEmpty {
                 arr.removeAll()
                 tblView.reloadData()
-                
             }
             return;
         }
         
+        // get values for the search string
         getAutocomplete(for: searchBar.text!)
     }
     
@@ -135,8 +154,10 @@ extension AddCityViewController: UISearchBarDelegate{
     
     func getAutocomplete(for cityStr: String){
         
+        // get url
         let autCompleteURL = getAutocompleteURL(cityStr)
         
+        // call API and get data
         Alamofire.request(autCompleteURL).responseJSON { response in
             
             if response.error != nil {
@@ -145,7 +166,7 @@ extension AddCityViewController: UISearchBarDelegate{
             }
             print(response.result.value!)
             let autoCompleteJSON : [JSON] = JSON(response.result.value!).arrayValue
-            print(autoCompleteJSON)
+            //print(autoCompleteJSON)
             
             self.arr.removeAll()
             for city in autoCompleteJSON {
@@ -161,8 +182,4 @@ extension AddCityViewController: UISearchBarDelegate{
             
         }// end of request
     }// end of function
-    
-    
-    
-    
 }
