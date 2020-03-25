@@ -101,23 +101,23 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
-        if let currLocation = locations.last {
-            
-            let lat = currLocation.coordinate.latitude
-            let lng = currLocation.coordinate.longitude
-            
-            let locationURL = getlocationURL("\(lat),\(lng)")
-            
-            
-            getLocationKey(for: locationURL)
-            .done { locKey, city in
-                self.lblCityName.text = city
-                self.updateCurrentTempAndCondition(locKey)
-            }
-            .catch { error in
-                print(error)
-            }
-        }
+//        if let currLocation = locations.last {
+//            
+//            let lat = currLocation.coordinate.latitude
+//            let lng = currLocation.coordinate.longitude
+//            
+//            let locationURL = getlocationURL("\(lat),\(lng)")
+//            
+//            
+//            getLocationKey(for: locationURL)
+//            .done { locKey, city in
+//                self.lblCityName.text = city
+//                self.updateCurrentTempAndCondition(locKey)
+//            }
+//            .catch { error in
+//                print(error)
+//            }
+//        }
         
     }
     
