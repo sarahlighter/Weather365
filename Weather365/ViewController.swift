@@ -232,47 +232,47 @@ extension ViewController {
      currentJSON[0]["Day"]["IconPhrase"]
      */
     
-//    func getExtendedForecast(for URL: String) -> Promise<[ForecastModel]>{
-//        
-//        return  Promise<[ForecastModel]>{ seal -> Void in
-//            Alamofire.request(URL).responseJSON { response in
-//            if response.error != nil {
-//                seal.reject(response.error!)
-//            }
-//            
-//                let forecastJSON : JSON = JSON(response.result.value!)
-//
-//                let arrForecasts: [JSON] = forecastJSON["DailyForecasts"].arrayValue
-//
-//                var arrReturn = [ForecastModel]()
-//
-//                for forecast in arrForecasts{
-//                    if forecast["EpochDate"].exists() &&
-//                       forecast["Temperature"]["Maximum"]["Value"].exists() &&
-//                       forecast["Temperature"]["Maximum"]["Value"].exists() &&
-//                       forecast["Day"]["IconPhrase"].exists() &&
-//                       forecast["Day"]["IconPhrase"].exists()
-//                    {
-//
-//                        let epochDate = forecast["EpochDate"].stringValue
-//                        let maxTemp = forecast["Temperature"]["Maximum"]["Value"].stringValue
-//                        let minTemp = forecast["Temperature"]["Minimum"]["Value"].stringValue
-//                        let dayCondition = forecast["Day"]["IconPhrase"].stringValue
-//                        let nightCondition = forecast["Night"]["IconPhrase"].stringValue
-//
-//                        let val = ForecastModel(epochDate, minTemp, maxTemp, dayCondition, nightCondition)
-//
-//                        arrReturn.append(val)
-//
-//                   }
-//                }
-//                seal.fulfill(arrReturn)
-//            
-//            
-//        }// end of promise
-//    }// end of function
+    func getExtendedForecast(for URL: String) -> Promise<[ForecastModel]>{
+        
+        return  Promise<[ForecastModel]>{ seal -> Void in
+            Alamofire.request(URL).responseJSON { response in
+            if response.error != nil {
+                seal.reject(response.error!)
+            }
+            
+                let forecastJSON : JSON = JSON(response.result.value!)
+
+                let arrForecasts: [JSON] = forecastJSON["DailyForecasts"].arrayValue
+
+                var arrReturn = [ForecastModel]()
+
+                for forecast in arrForecasts{
+                    if forecast["EpochDate"].exists() &&
+                       forecast["Temperature"]["Maximum"]["Value"].exists() &&
+                       forecast["Temperature"]["Maximum"]["Value"].exists() &&
+                       forecast["Day"]["IconPhrase"].exists() &&
+                       forecast["Day"]["IconPhrase"].exists()
+                    {
+
+                        let epochDate = forecast["EpochDate"].stringValue
+                        let maxTemp = forecast["Temperature"]["Maximum"]["Value"].stringValue
+                        let minTemp = forecast["Temperature"]["Minimum"]["Value"].stringValue
+                        let dayCondition = forecast["Day"]["IconPhrase"].stringValue
+                        let nightCondition = forecast["Night"]["IconPhrase"].stringValue
+
+                        let val = ForecastModel(epochDate, minTemp, maxTemp, dayCondition, nightCondition)
+
+                        arrReturn.append(val)
+
+                   }
+                }
+                seal.fulfill(arrReturn)
+            
+            
+        }// end of promise
+    }// end of function
     
-    
+    }
     func getCurrentConditions(for URL: String) -> Promise<(String, String)>{
         
         return Promise<(String, String)> { seal -> Void  in
