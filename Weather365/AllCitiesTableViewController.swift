@@ -22,7 +22,7 @@ class AllCitiesTableViewController: UITableViewController {
     @IBOutlet var tblView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        initValues()
+        //initValues()
     }
 
 

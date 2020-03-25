@@ -51,26 +51,6 @@ extension AddCityViewController: UITableViewDelegate, UITableViewDataSource {
         addCityToDB(for: indexPath.row)
     }
     
-    
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        
-        if editingStyle == .delete {
-            let loc = arr[indexPath.row]
-            //self.deleteCity(for: loc)
-            self.arr.remove(at: indexPath.row)
-            tblView.deleteRows(at: [indexPath], with: .fade)
-        }
-    }
-    
-    func deleteCity(for location: LocationModel){
-        let realm = try! Realm()
-        try! realm.write{
-            realm.delete(location)
-        }
-    }
-    
-    
-    
     func addCityToDB(for row: Int){
         let city = arr[row].cityName
         let alert = UIAlertController(title: "Add City", message: "Get weather for \(city)", preferredStyle:.alert)

@@ -11,7 +11,7 @@ import Foundation
 
 class Constants{
     
-    static let apiKey = "APIKey"
+    static let apiKey = "API"
     static let locationURL = "https://dataservice.accuweather.com/locations/v1/cities/geoposition/search"
     static let currentWeatherURL = "https://dataservice.accuweather.com/currentconditions/v1/"
     static let autocompleteURL = "https://dataservice.accuweather.com/locations/v1/cities/autocomplete"

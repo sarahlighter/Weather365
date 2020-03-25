@@ -101,23 +101,23 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
-//        if let currLocation = locations.last {
-//            
-//            let lat = currLocation.coordinate.latitude
-//            let lng = currLocation.coordinate.longitude
-//            
-//            let locationURL = getlocationURL("\(lat),\(lng)")
-//            
-//            
-//            getLocationKey(for: locationURL)
-//            .done { locKey, city in
-//                self.lblCityName.text = city
-//                self.updateCurrentTempAndCondition(locKey)
-//            }
-//            .catch { error in
-//                print(error)
-//            }
-//        }
+        if let currLocation = locations.last {
+            
+            let lat = currLocation.coordinate.latitude
+            let lng = currLocation.coordinate.longitude
+            
+            let locationURL = getlocationURL("\(lat),\(lng)")
+            
+            
+            getLocationKey(for: locationURL)
+            .done { locKey, city in
+                self.lblCityName.text = city
+                self.updateCurrentTempAndCondition(locKey)
+            }
+            .catch { error in
+                print(error)
+            }
+        }
         
     }
     
@@ -222,25 +222,76 @@ extension ViewController {
         }// End of promise
     }// end of function getLocationKey
     
+    
+    
+    /*
+     EpochDate
+     currentJSON[0]["Temperature"]["Minimum"]["Value"]
+     currentJSON[0]["Temperature"]["Maximum"]["Value"]
+     currentJSON[0]["Day"]["IconPhrase"]
+     currentJSON[0]["Day"]["IconPhrase"]
+     */
+    
+//    func getExtendedForecast(for URL: String) -> Promise<[ForecastModel]>{
+//        
+//        return  Promise<[ForecastModel]>{ seal -> Void in
+//            Alamofire.request(URL).responseJSON { response in
+//            if response.error != nil {
+//                seal.reject(response.error!)
+//            }
+//            
+//                let forecastJSON : JSON = JSON(response.result.value!)
+//
+//                let arrForecasts: [JSON] = forecastJSON["DailyForecasts"].arrayValue
+//
+//                var arrReturn = [ForecastModel]()
+//
+//                for forecast in arrForecasts{
+//                    if forecast["EpochDate"].exists() &&
+//                       forecast["Temperature"]["Maximum"]["Value"].exists() &&
+//                       forecast["Temperature"]["Maximum"]["Value"].exists() &&
+//                       forecast["Day"]["IconPhrase"].exists() &&
+//                       forecast["Day"]["IconPhrase"].exists()
+//                    {
+//
+//                        let epochDate = forecast["EpochDate"].stringValue
+//                        let maxTemp = forecast["Temperature"]["Maximum"]["Value"].stringValue
+//                        let minTemp = forecast["Temperature"]["Minimum"]["Value"].stringValue
+//                        let dayCondition = forecast["Day"]["IconPhrase"].stringValue
+//                        let nightCondition = forecast["Night"]["IconPhrase"].stringValue
+//
+//                        let val = ForecastModel(epochDate, minTemp, maxTemp, dayCondition, nightCondition)
+//
+//                        arrReturn.append(val)
+//
+//                   }
+//                }
+//                seal.fulfill(arrReturn)
+//            
+//            
+//        }// end of promise
+//    }// end of function
+    
+    
     func getCurrentConditions(for URL: String) -> Promise<(String, String)>{
         
         return Promise<(String, String)> { seal -> Void  in
             
-                Alamofire.request(URL).responseJSON { response in
-                    if response.error != nil {
-                        seal.reject(response.error!)
-                    }
+            Alamofire.request(URL).responseJSON { response in
+                if response.error != nil {
+                    seal.reject(response.error!)
+                }
+                
+                let currentJSON : JSON = JSON(response.result.value!)
+                
+                if  currentJSON[0]["WeatherText"].exists() &&
+                    currentJSON[0]["Temperature"]["Imperial"]["Value"].exists() {
                     
-                    let currentJSON : JSON = JSON(response.result.value!)
+                    let condition = currentJSON[0]["WeatherText"].stringValue
+                    let temp = currentJSON[0]["Temperature"]["Imperial"]["Value"].stringValue
                     
-                    if  currentJSON[0]["WeatherText"].exists() &&
-                        currentJSON[0]["Temperature"]["Imperial"]["Value"].exists() {
-                        
-                        let condition = currentJSON[0]["WeatherText"].stringValue
-                        let temp = currentJSON[0]["Temperature"]["Imperial"]["Value"].stringValue
-                        
-                        seal.fulfill((temp, condition))
-                    }
+                    seal.fulfill((temp, condition))
+                }
             }// end of promise
         }// end of function
     
@@ -250,3 +301,4 @@ extension ViewController {
         
     }
 }
+

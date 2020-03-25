@@ -29,7 +29,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="47 F" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vm6-32-x9d">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="47 ℉" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vm6-32-x9d">
                                 <rect key="frame" x="54" y="295" width="281" height="69"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="50"/>
@@ -116,7 +116,13 @@
                             <outlet property="delegate" destination="8P0-GT-4ls" id="LOK-47-Khh"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="ZwW-7N-M6d"/>
+                    <navigationItem key="navigationItem" id="ZwW-7N-M6d">
+                        <barButtonItem key="rightBarButtonItem" title="Delete" id="3l1-zD-tYR">
+                            <connections>
+                                <segue destination="xKA-oQ-t6c" kind="show" id="YUV-du-c0a"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="tblView" destination="aiq-PR-Fuo" id="UxN-MM-lYg"/>
                     </connections>
@@ -124,6 +130,38 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yxU-C7-BmI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1100" y="895"/>
+        </scene>
+        <!--Remove Cities-->
+        <scene sceneID="7R4-6C-48d">
+            <objects>
+                <tableViewController id="xKA-oQ-t6c" customClass="DeleteCitiesTableViewController" customModule="Weather365" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="tzg-UK-APx">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="5pE-rq-g2u">
+                                <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="5pE-rq-g2u" id="PDc-MD-dVT">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="xKA-oQ-t6c" id="fZm-vZ-NUy"/>
+                            <outlet property="delegate" destination="xKA-oQ-t6c" id="dHC-7x-cL6"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Remove Cities" id="I3v-VW-NPf"/>
+                    <connections>
+                        <outlet property="tblView" destination="tzg-UK-APx" id="qPp-nN-yAY"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Fzd-Td-Bv1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2130" y="931"/>
         </scene>
         <!--Add City-->
         <scene sceneID="lAa-3p-Clx">
